@@ -20,9 +20,23 @@
         </script>
         <!--Datepicker code above-->
 
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css">
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+        <script type="text/javascript">
+            var map;
+            function initialize(){
+            map= L.map('canvas').setView([24.99, 121.55], 15);
+            var osmAttrib='Powered by © <a href="http://osm.org/copyright">OpenStreetMap</a>';
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 8, maxZoom: 18, attribution: osmAttrib}).addTo(map);
+        }
+        </script>
+        <!--Leaflet code above-->
+
     </head>
     
-    <body>
+    <body onclick="initialize()">
         <!--Header Section-->
         <div class="header">
             <b style="font-size: 25pt">NCCU Stray/Injured Animals Reporting Platform</b>
@@ -34,14 +48,19 @@
                 <ul>
                     <li><a href="#tabs-1">Home</a></li>
                     <li><a href="#tabs-2">Report</a></li>
-                    <li><a href="#tabs-3">Statistics</a></li>
-                    <li><a href="#tabs-4">Manage</a></li>
+                    <li><a href="#tabs-3">Browse/Manage</a></li>
+                    <li><a href="#tabs-4">Statistics</a></li>
                     <li><a href="#tabs-5">Information</a></li>
                 </ul>
                 <div id="tabs-1">We're to add "Introduction" and "Tutorials" here.</div>
-                <div id="tabs-2">We're to build the reporting function here.</div>
-                <div id="tabs-3">We're to create interactive WebGL graphs here.</div>
-                <div id="tabs-4">We're to offer the managing function here.</div>
+                <div id="tabs-2">
+                    <div id="rleftpane">We're to build the reporting function here.</div>
+                    <div id="rrightpane">
+                        <div id="canvas"></div>
+                    </div>
+                </div>
+                <div id="tabs-3">We're to offer the managing function here.</div>
+                <div id="tabs-4">We're to create interactive WebGL graphs here.</div>
                 <div id="tabs-5">We're to state the developing information here.</div>
             </div>
         </div>

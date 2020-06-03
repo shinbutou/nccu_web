@@ -33,3 +33,17 @@ body{
     border-collapse: collapse;
     background-color: lightslategray;
 }
+
+#rleftpane{
+    display: inline-block;
+    width: 50%;
+}
+
+#rrightpane{
+    display: inline-block;
+    width: 50%;
+}
+
+#canvas{
+    height: 85%;
+}
