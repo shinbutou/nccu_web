@@ -98,7 +98,7 @@
             }	
         </script>
         <!--Leaflet code above-->
-        
+
     </head>
     
     <body onload="initialize()">
@@ -119,11 +119,18 @@
                 </ul>
                 <div id="tabs-1">
                     <div class="display">
-                        We're to add "Introduction" and "Tutorials" here.
+                        <p class="heading">Introduction</p>
+                        <p class="content">1.</p>
+                        <hr>
+                        <p class="heading">Tutorials</p>
+                        <p class="content">1.</p>
                     </div>
                 </div>
                 <div id="tabs-2">
                     <div class="display">
+                        <p class="heading">Tutorials</p>
+                        <p class="content">1.</p>
+                        <hr>
                         <div id="rleftpane">
                             <table>
                                 <tr>
@@ -173,17 +180,33 @@
                 </div>
                 <div id="tabs-3">
                     <div class="display">
-                        We're to offer the managing function here.
+                        <p class="heading">hi</p>
+                        <p class="content">hi</p>
+                        <hr>
+                        <div class="manage_panel" name="manage_panel">
+                            {% for news in top_news_list_2 %}
+                                <a style="text-decoration: none" href={{ news['link']}}>
+                                    <div style="font-size: 10pt; text-align: justify; color:#222222; text-decoration: none; margin: 1px; padding: 9px; background-color: gainsboro; cursor: pointer;">
+                                        {{ news['title']}}
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
                 <div id="tabs-4">
                     <div class="display">
-                        We're to create interactive WebGL graphs here.
+                        <p class="heading">hi</p>
+                        <p class="content">hi</p>
                     </div>
                 </div>
                 <div id="tabs-5">
                     <div class="display">
-                        We're to state the developing information here.
+                        <p class="heading">Information</p>
+                        <p class="content">hi</p>
+                        <hr>
+                        <p class="heading">Contact</p>
+                        <p class="content"></p>
                     </div>
                 </div>
             </div>
