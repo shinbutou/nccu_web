@@ -40,7 +40,7 @@
             var myIconC = L.icon({iconUrl: 'https://i.imgur.com/8xoH4xR.png'});
      
             function initialize(){
-                report_map = L.map("rmapcanvas").setView([24.9869831,121.5800345], 10);
+                report_map = L.map("rmapcanvas").setView([24.99, 121.55], 15);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 8, maxZoom: 16}).addTo(report_map);
                 addCluster();
                 getUserPosition();
