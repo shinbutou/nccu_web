@@ -76,16 +76,19 @@ body{
 }
 
 .rinput{
-    width: 560px;
+    width: 100%;
+}
+
+textarea{
+    width: 100%;
+    height: 200px;
+    overflow-y : auto;
+    resize: none;
 }
 
 .rcinput{
     color: gray;
     width: 242px;
-}
-
-#des{
-    height: 200px;
 }
 
 #rmapcanvas{

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel=stylesheet type="text/css" href="../static/main.css">
+        <link rel=stylesheet type="text/css" href="{{ url_for('static', filename='main.css') }}">
         <!--Basic settings above-->
 
         
@@ -26,9 +26,7 @@
         <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 
         <script type="text/javascript">
-		
-		    var Data = {{ data | tojson }};
-			
+
             var report_map;
             var ClusterGroup = L.markerClusterGroup();
             var markerLayer = new L.LayerGroup();
@@ -105,7 +103,7 @@
     <body onload="initialize()">
         <!--Header Section-->
         <div class="toppane">
-            <p id="header">NCCU Stray/Injured Animals Reporting Platform</p>
+            <p id="header">National Chengchi University Animal Reporting Platform</p>
         </div>
         
         <!--Tabs Section-->
@@ -121,10 +119,38 @@
                 <div id="tabs-1">
                     <div class="display">
                         <p class="heading">Introduction</p>
-                        <p class="content">1.</p>
-                        <hr>
+                        <p class="content">The campus of National Chengchi University is located at the foot of the mountain hills, with abundance 
+                            of wild or stray animal presence. In case of danger or incidents where human intervention was needed, students are prone to 
+                            share information on social media. But due to the general lack of management and the use of applications that weren't designed 
+                            for this specific purpose, the spread of information can often be quite inefficient. To solve this problem, we've built this very 
+                            site, in hope to better the aforementioned situation.
+                        </p>
+                        <br><hr><br>
                         <p class="heading">Site Map</p>
-                        <p class="content">1.</p>
+                        <p class="content">
+                            <table>
+                                <tr>
+                                    <td>Home: </td>
+                                    <td>Brief introduction and guidance.</td>
+                                </tr>
+                                <tr>
+                                    <td>Report: </td>
+                                    <td>Anyone can report cases here.</td>
+                                </tr>
+                                <tr>
+                                    <td>Browse/Manage: </td>
+                                    <td>Anyone can view and check the reported cases, with only administrators allowed to update information.</td>
+                                </tr>
+                                <tr>
+                                    <td>Statistics: </td>
+                                    <td>Trends and analytical insights demonstrated visually</td>
+                                </tr>
+                                <tr>
+                                    <td>Information: </td>
+                                    <td>For help or suggestions, check out this section.</td>
+                                </tr>
+                            </table>
+                        </p>
                     </div>
                 </div>
                 <div id="tabs-2">
@@ -135,18 +161,18 @@
                         </p>
                         <hr>
                         <div id="rleftpane">
-                            <table style="margin-top: 10px;">
+                            <table style="margin-top: 10px; width: 560px;">
                                 <tr>
                                     <td><p class="label">Topic</p></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="rinput" value="" id="con" width="100vh"></td>
+                                    <td><input type="text" class="rinput" value="" id="con"></td>
                                 </tr>
                                 <tr>
                                     <td><p class="label"><br>Description</p></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="rinput" value="" id="des"></td>
+                                    <td><textarea id="des" name="des">please describe as detailed as possible</textarea></td>
                                 </tr>
                                 <tr>
                                     <td><p class="label"><br>Labels</p></td>
@@ -179,8 +205,7 @@
                 </div>
                 <div id="tabs-3">
                     <div class="display">
-                        <p class="heading">hi</p>
-                        <p class="content">hi</p>
+                        <p class="content">All reported cases are shown below. Only administrators of the site can manage and update their status.</p>
                         <hr>
                         <div class="manage_panel" name="manage_panel">
                             {% for news in top_news_list_2 %}
@@ -195,17 +220,20 @@
                 </div>
                 <div id="tabs-4">
                     <div class="display">
-                        <p class="heading">hi</p>
-                        <p class="content">hi</p>
+                        <p class="content">Statistics of cases reported and managed are showcased visually below.</p>
                     </div>
                 </div>
                 <div id="tabs-5">
                     <div class="display">
                         <p class="heading">Information</p>
-                        <p class="content">hi</p>
-                        <hr>
+                        <p class="content">The Reporting Platform was designed and constructed by NCCU student Cheng-Hsi Yang and Yu-Shan Wu. 
+                            In partial requirements for the course "Web Programming", as term project, in spring semester of the academic year 2019.
+                        </p>
+                        <br><hr><br>
                         <p class="heading">Contact</p>
-                        <p class="content"></p>
+                        <p class="content">To get help or to make feature suggestions, you could contact us through university email, id 106308049 and 
+                            107702000, respectively.
+                        </p>
                     </div>
                 </div>
             </div>
