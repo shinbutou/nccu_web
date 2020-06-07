@@ -11,6 +11,10 @@ body{
     background-color: whitesmoke;
 }
 
+.label{
+    font-weight: bold;
+}
+
 .vertical-center{
     margin: 0;
     position: relative;
@@ -51,6 +55,6 @@ body{
     width: 50%;
 }
 
-#canvas{
+#rmapcanvas{
     height: 100%;
 }

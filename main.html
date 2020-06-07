@@ -3,6 +3,7 @@
         <link rel=stylesheet type="text/css" href="./main.css">
         <!--Basic settings above-->
 
+        
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -21,22 +22,92 @@
         <!--Datepicker code above-->
 
 
+        <script type="text/javascript" src="./schema/data.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css">
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
         <script type="text/javascript">
-            var map;
+            var report_map;
+            var ClusterGroup = L.markerClusterGroup();
+            var markerLayer = new L.LayerGroup();
+            var clusterON = false;
+
+            var myIconA = L.icon({iconUrl: 'https://i.imgur.com/5MxyKei.png'});
+            var myIconC = L.icon({iconUrl: 'https://i.imgur.com/8xoH4xR.png'});
+     
             function initialize(){
-            map= L.map('canvas').setView([24.99, 121.55], 15);
-            var osmAttrib='Powered by © <a href="http://osm.org/copyright">OpenStreetMap</a>';
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 8, maxZoom: 18, attribution: osmAttrib}).addTo(map);
-        }
+                report_map = L.map("rmapcanvas").setView([24.9869831,121.5800345], 10);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 8, maxZoom: 16}).addTo(report_map);
+                addCluster();
+                getUserPosition();
+                clusterON = true;
+                report_map.on('click', onMapClick);
+            }
+            
+            var temp  = new L.marker([0,0]);
+
+            function onMapClick(e){
+                temp.setLatLng(e.latlng).addTo(report_map).bindPopup("<b>Get your location:</b>").openPopup();
+                document.getElementById("lat").value = e.latlng.lat;
+                document.getElementById("lon").value = e.latlng.lng;
+            
+            }
+                    
+            function getUserPosition(){
+                // 檢查瀏覽器是否支援 Geolocation API
+                if(navigator.geolocation){    
+                    // 定義成功的回呼函式
+                    function showPosition(position){
+                        L.marker([position.coords.latitude, position.coords.longitude], {icon:myIconC,}).addTo(report_map).bindPopup("<b>You're here!</b>").openPopup();
+                        report_map.setView([position.coords.latitude, position.coords.longitude], 12);
+                        document.getElementById("lat").value = position.coords.latitude;
+                        document.getElementById("lon").value = position.coords.longitude;
+                    }
+                    // 定義失敗的回呼函式
+                    function showError(){
+                        console.log("Unable to obtain your location.")
+                    }
+                    navigator.geolocation.getCurrentPosition(showPosition, showError);
+                }
+                else{
+                    console.log("Your device doesn't support location services.");
+                }
+            }
+            
+            // Cluster
+            function addCluster(){
+                for(var p in Data){
+                    var x = parseFloat(Data[p]['lat']);
+                    var y = parseFloat(Data[p]['lon']);
+                    var info2 =
+                    "<b>Topic: "+ Data[p]['Condition'] 
+                    + "</b><br>Description: "+Data[p]['Description']
+                    +"<br>Location："+Data[p]['Location']+"";
+            
+                    var marker = L.marker([x, y], {icon: myIconA,}).bindPopup(info2);
+                    ClusterGroup.addLayer(marker);
+                }			
+                report_map.addLayer(ClusterGroup);	
+            }
+            
+            function AddData(){
+                var Con = document.getElementById("con");
+                var Des = document.getElementById("des");
+                var Loc = document.getElementById("loc");
+                var Lat = document.getElementById("lat");
+                var Lon = document.getElementById("lon");
+            }	
         </script>
         <!--Leaflet code above-->
+        
 
     </head>
     
-    <body onclick="initialize()">
+    <body onload="initialize()">
         <!--Header Section-->
         <div class="header">
             <b style="font-size: 25pt">NCCU Stray/Injured Animals Reporting Platform</b>
@@ -60,10 +131,49 @@
                 <div id="tabs-2">
                     <div class="display">
                         <div id="rleftpane">
-                            We're to build the reporting function here.
+                            <table>
+                                <tr>
+                                    <td><p class="label">Topic</p></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" value="" id="con" ></td>
+                                </tr>
+                                <tr>
+                                    <td><p class="label"><br>Description</p></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" value="" id="des" ></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td><p class="label"><br>Labels</p></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" value="" id="loc" ></td>
+                                </tr>
+                                <tr>
+                                    <td><p class="label"><br>Coordinates</p></td>
+                                </tr>
+                                <tr>
+                                    <td>Longitude:</td>
+                                    <td>
+                                        <input type="text" value="" id="lon">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Latitude:</td>
+                                    <td>
+                                        <input type="text" value="" id="lat">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br><input type="button" class="label" value="submit" id="rsubmit" onclick= "AddData()">
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div id="rrightpane">
-                            <div id="canvas"></div>
+                            <div id="rmapcanvas"></div>
                         </div>
                     </div>
                 </div>
