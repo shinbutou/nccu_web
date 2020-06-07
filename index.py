@@ -6,8 +6,14 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    return render_template('login.html')
 
+   input_file =  open('./schema/Data.json',"r",encoding="utf-8")
+
+   json_array = json.load(input_file)
+        
+   return render_template("index.html", data = json_array )
+   
+'''
 @app.route("/login.html", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
@@ -96,7 +102,7 @@ def create_entry():
 
     return res
 
-    
+'''    
 if __name__ == "__main__":
     app.run()
     

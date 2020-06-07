@@ -26,6 +26,9 @@
         <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 
         <script type="text/javascript">
+		
+		    var Data = {{ data | tojson }};
+			
             var report_map;
             var ClusterGroup = L.markerClusterGroup();
             var markerLayer = new L.LayerGroup();
@@ -51,28 +54,7 @@
                 document.getElementById("lon").value = e.latlng.lng;
             
             }
-                    
-            function getUserPosition(){
-                // 檢查瀏覽器是否支援 Geolocation API
-                if(navigator.geolocation){    
-                    // 定義成功的回呼函式
-                    function showPosition(position){
-                        L.marker([position.coords.latitude, position.coords.longitude], {icon:myIconC,}).addTo(report_map).bindPopup("<b>You're here!</b>").openPopup();
-                        report_map.setView([position.coords.latitude, position.coords.longitude], 12);
-                        document.getElementById("lat").value = position.coords.latitude;
-                        document.getElementById("lon").value = position.coords.longitude;
-                    }
-                    // 定義失敗的回呼函式
-                    function showError(){
-                        console.log("Unable to obtain your location.")
-                    }
-                    navigator.geolocation.getCurrentPosition(showPosition, showError);
-                }
-                else{
-                    console.log("Your device doesn't support location services.");
-                }
-            }
-            
+              
             // Cluster
             function addCluster(){
                 for(var p in Data){
@@ -88,14 +70,7 @@
                 }			
                 report_map.addLayer(ClusterGroup);	
             }
-            
-            function AddData(){
-                var Con = document.getElementById("con");
-                var Des = document.getElementById("des");
-                var Loc = document.getElementById("loc");
-                var Lat = document.getElementById("lat");
-                var Lon = document.getElementById("lon");
-            }	
+  
         </script>
         <!--Leaflet code above-->
 
