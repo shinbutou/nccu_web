@@ -46,7 +46,7 @@
             var temp  = new L.marker([0,0]);
 
             function onMapClick(e){
-                temp.setLatLng(e.latlng).addTo(report_map).bindPopup("<b>Get your location:</b>").openPopup();
+                temp.setLatLng(e.latlng).addTo(report_map).bindPopup("<b>Incident Location</b>").openPopup();
                 document.getElementById("lat").value = e.latlng.lat;
                 document.getElementById("lon").value = e.latlng.lng;
             
@@ -122,53 +122,51 @@
                         <p class="heading">Introduction</p>
                         <p class="content">1.</p>
                         <hr>
-                        <p class="heading">Tutorials</p>
+                        <p class="heading">Site Map</p>
                         <p class="content">1.</p>
                     </div>
                 </div>
                 <div id="tabs-2">
                     <div class="display">
-                        <p class="heading">Tutorials</p>
-                        <p class="content">1.</p>
+                        <p class="content">To report any kind of cases, please fill in the topic, descriptions, 
+                            and labels to help the managers or associates better classify and identify the matter
+                            to intend to.
+                        </p>
                         <hr>
                         <div id="rleftpane">
-                            <table>
+                            <table style="margin-top: 10px;">
                                 <tr>
                                     <td><p class="label">Topic</p></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="" id="con" ></td>
+                                    <td><input type="text" class="rinput" value="" id="con" width="100vh"></td>
                                 </tr>
                                 <tr>
                                     <td><p class="label"><br>Description</p></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="" id="des" ></textarea></td>
+                                    <td><input type="text" class="rinput" value="" id="des"></td>
                                 </tr>
                                 <tr>
                                     <td><p class="label"><br>Labels</p></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" value="" id="loc" ></td>
+                                    <td><input type="text" class="rinput" value="" id="loc" ></td>
                                 </tr>
+                            </table>
+                            <table>
                                 <tr>
                                     <td><p class="label"><br>Coordinates</p></td>
                                 </tr>
                                 <tr>
-                                    <td>Longitude:</td>
                                     <td>
-                                        <input type="text" value="" id="lon">
+                                        <input type="text" class="rcinput" value="longitude" id="lon">
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td>Latitude:</td>
                                     <td>
-                                        <input type="text" value="" id="lat">
+                                        <input type="text" class="rcinput" value="latitude" id="lat">
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
-                                        <br><input type="button" class="label" value="submit" id="rsubmit" onclick= "AddData()">
+                                        <input type="button" class="label" value="submit" id="rsubmit" onclick= "AddData()">
                                     </td>
                                 </tr>
                             </table>

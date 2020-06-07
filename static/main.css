@@ -12,12 +12,15 @@ body{
 }
 
 .heading{
-    font-size: 1.2rem;
     font-weight: bold;
 }
 
 .content{
     color: black;
+}
+
+.label{
+    font-weight: bold;
 }
 
 .vertical-center{
@@ -56,26 +59,38 @@ body{
 
 .display{
     width: 100%;
-    height: 86%;
+    height: 87%;
 }
 
 #rleftpane{
     position: relative;
     float: left;
     width: 50%;
-    height: 52%;
 }
 
 #rrightpane{
     position: relative;
     float: left;
     width: 50%;
-    height: 52%;
+    margin-top: 10px;
+}
+
+.rinput{
+    width: 560px;
+}
+
+.rcinput{
+    color: gray;
+    width: 242px;
+}
+
+#des{
+    height: 200px;
 }
 
 #rmapcanvas{
     width: 100%;
-    height: 100%;
+    height: 90%;
 }
 
 .manage_panel{
