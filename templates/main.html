@@ -47,12 +47,38 @@
             }
             
             var temp  = new L.marker([0,0]);
-
+/*
             function onMapClick(e){
                 temp.setLatLng(e.latlng).addTo(report_map).bindPopup("<b>Incident Location</b>").openPopup();
                 document.getElementById("lat").value = e.latlng.lat;
                 document.getElementById("lon").value = e.latlng.lng;
             
+            }*/
+			
+			function getUserPosition() {
+				// 檢查瀏覽器是否支援 Geolocation API
+				if(navigator.geolocation) {
+
+				// 定義成功的回呼函式
+				function showPosition(position) {
+				  L.marker([position.coords.latitude, position.coords.longitude], {icon:myIconC,}
+				  ).addTo(report_map).bindPopup("<b>You're here!</b>").openPopup();
+				  report_map.setView([position.coords.latitude, position.coords.longitude], 12);
+				  
+				  document.getElementById("lat").value = position.coords.latitude;
+				  document.getElementById("lon").value = position.coords.longitude;
+				}
+
+				// 定義失敗的回呼函式
+				function showError() {
+				  console.log('抱歉，現在無法取的您的地理位置。')
+				}
+
+				navigator.geolocation.getCurrentPosition(showPosition, showError);
+
+			  } else {
+				console.log('抱歉，您的裝置不支援定位功能。');
+		  	  }
             }
               
             // Cluster

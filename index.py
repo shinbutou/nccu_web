@@ -11,7 +11,7 @@ def main():
 
    json_array = json.load(input_file)
         
-   return render_template("index.html", data = json_array )
+   return render_template("main.html", data = json_array )
    
 '''
 @app.route("/login.html", methods=["POST", "GET"])
