@@ -116,7 +116,7 @@
 			 "中正區":0 ,
 			 "大同區":0 ,
 			 "中山區":0 ,
-			 "松山區":0 },
+			 "松山區":0 ,
 			 "大安區":0 ,
 			 "萬華區":0 ,
 			 "信義區":0 ,
@@ -128,7 +128,7 @@
 			 }
 			
             
-			for (var ptr in data){ counter[ptr]++;}
+			for (var ptr in data){ counter[ptr.dis]++;}
 			
 			
             // x: 編號; n: 市名; v: 收容數; w: 認養數; p: 認養率 
@@ -277,7 +277,7 @@
 
             var vis = d3.select(".test2")
                 .append("svg:svg")              
-                .data([data])                   
+                .data(counter)   //                
                     .attr("width", w)           
                     .attr("height", h)
                 .append("svg:g")                
@@ -287,7 +287,7 @@
                 .outerRadius(r);
 
             var pie = d3.layout.pie()           
-                .value(function(d) { return d.p; });    
+                .value(function(d) { return counter[d]; });    
 
             var arcs = vis.selectAll("g.slice")     
                 .data(pie)                           
@@ -307,7 +307,7 @@
                         return "translate(" + arc.centroid(d) + ")";       
                     })
                     .attr("text-anchor", "middle")                         
-                    .text(function(d, i) { return data[i].n+" "+data[i].p+"%"; })
+                    .text(function(d, i) { return d+" "+counter[d]; })
                     .style({
                             'font-size':'12px'
                     });        
