@@ -106,8 +106,3 @@ textarea{
 .manage_panel::-webkit-scrollbar{
     display: none;
 }
-
-#scanvas_1{
-    width: 640px;
-    height: 480px;
-}

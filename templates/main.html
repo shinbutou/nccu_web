@@ -447,20 +447,26 @@
                     <div class="display">
                         <p class="content">All reported cases are shown below. Only administrators of the site can manage and update their status.</p>
                         <hr>
-                        <div class="manage_panel" name="manage_panel">
-                            {% for news in top_news_list_2 %}
-                                <a style="text-decoration: none" href={{ news['link']}}>
-                                    <div style="font-size: 10pt; text-align: justify; color:#222222; text-decoration: none; margin: 1px; padding: 9px; background-color: gainsboro; cursor: pointer;">
-                                        {{ news['title']}}
-                                    </div>
-                                </a>
-                            {% endfor %}
+                        <div id="rleftpane">
+                            <div class="manage_panel" name="manage_panel">
+                                {% for news in top_news_list_2 %}
+                                    <a style="text-decoration: none" href={{ news['link']}}>
+                                        <div style="font-size: 10pt; text-align: justify; color:#222222; text-decoration: none; margin: 1px; padding: 9px; background-color: gainsboro; cursor: pointer;">
+                                            {{ news['title']}}
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div id="rrightpane">
+                            <div id="rmapcanvas"></div>
                         </div>
                     </div>
                 </div>
                 <div id="tabs-4">
                     <div class="display">
                         <p class="content">Statistics of cases reported and managed are showcased visually below.</p>
+<<<<<<< HEAD
                         
                         <p class="heading">2019年11月全國公立動物收容所收容處理情形</p>
                         <p class="content" id ="chartName">【總案件數】</p>
@@ -470,6 +476,19 @@
                         <p class="content">【台北各區案件數】</p>
                         <div class="test2" style="text-align:left"></div>
                         <canvas id="scanvas_1"></canvas>
+=======
+                        <div id="rleftpane">
+                            <p class="heading">2019年11月全國公立動物收容所收容處理情形</p>
+                            <p class="content" id ="chartName">【當月被認養數】</p>
+                            <div class="test" style="text-align:left"></div>
+                            <input type="button" value="切換至收容數" id="change_to_v">
+                            <input type="button" value="切換至被認養數" id="change_to_w">
+                        </div>
+                        <div id="rrightpane">
+                            <p class="content">【當月被認養率】</p>
+                            <div class="test2" style="text-align:left"></div>  
+                        </div>
+>>>>>>> 0a8f12bdb44b9c345577ae8a831eb841d928ab9b
                     </div>
                 </div>
                 <div id="tabs-5">
