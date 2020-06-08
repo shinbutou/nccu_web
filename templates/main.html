@@ -111,23 +111,46 @@
 		 ////////////////////////////  Bar Chart
 
 		  var data=[
-			{x:1, n:'新北市', w:379, p:62},
-			{x:2, n:'臺北市', w:49, p:27},
-			{x:3, n:'桃園市', w:136, p:29},
-			{x:4, n:'臺中市', w:135, p:17},
-			{x:5, n:'臺南市', w:195, p:29},
-			{x:6, n:'高雄市', w:177, p:32}
+			{x:1, n:'新北市', v:609, w:379, p:62},
+			{x:2, n:'臺北市', v:179, w:49, p:27},
+			{x:3, n:'桃園市', v:474, w:136, p:29},
+			{x:4, n:'臺中市', v:806, w:135, p:17},
+			{x:5, n:'臺南市', v:681, w:195, p:29},
+			{x:6, n:'高雄市', v:560, w:177, p:32}
 		  ];
+		  
+		  // x:編號   n:市名  v:收容數  w:認養數  p:認養率 
 
 		  var s = d3.select('.test')
 					.append('svg')
 					.attr({
-					  'width':500,
+					  'width':800,
 					  'height':250
 					});
 					
+		   var num = s.append('g')
+            .attr({'id':'num' });
+			
 		   var name = s.append('g')
-            .attr({ });
+            .attr({'id':'name'});
+			
+			var nowChart = 1;
+			
+		   document.getElementById("change_to_w").onclick = function(){
+		      if( nowChart == 2){
+		          document.getElementById("chartName").innerHTML="【當月被認養數】";
+		          nowChart = 1;
+                 _transition();
+			  }
+		   }
+		   document.getElementById("change_to_v").onclick = function(){
+		      if( nowChart ==1 ){
+		          document.getElementById("chartName").innerHTML="【當月收容數】";
+		          nowChart = 2;
+                 _transition();
+		      }
+		   }
+	
 
 		  s.selectAll('rect')
 		   .data(data)
@@ -150,7 +173,7 @@
 			}
 		   });
 
-		  s.selectAll('text')
+		  num.selectAll('text')
 		   .data(data)
 		   .enter()
 		   .append('text')
@@ -178,6 +201,43 @@
 			  };
 		   });
 		   
+		   function _transition(){
+
+			  s.selectAll('rect')
+			   .data(data)
+			   .transition()
+			   .duration(1500)
+			   .attr({
+				'width':function(d){
+				  if( nowChart==1){ return d.w ; }
+				  else{ return d.v ; }
+				}
+			   });
+
+			  s.selectAll('text')
+			   .data(data)
+			   .transition()
+			   .duration(1500)
+			   .attr({
+				'x':function(d){
+				 if( nowChart==1){
+				   return d.w + 48;
+				   }
+				  else{
+				   return d.v + 48;
+				   }
+				 }
+			    })
+			   .tween('number',function(d){
+			      if( nowChart==1){ var i = d3.interpolateRound(0, d.w);}
+				  else{var i = d3.interpolateRound(0, d.v);}
+				  return function(t) {
+				  this.textContent = i(t);
+			    };
+		      });			  
+				  
+			}
+		  
 		      
 	      name.selectAll('text')  ///name
 		  .data(data)
@@ -194,6 +254,10 @@
 		  }).style({
 			'font-size':'12px'
 		  });
+		  
+		  
+		  
+		  
 
 		   ////////////////////////////  Pie Chart
 		   
@@ -238,6 +302,8 @@
 					.style({
 				         'font-size':'12px'
 			         });        
+					 
+					 
 					   
           },false);
 		
@@ -374,14 +440,16 @@
                     <div class="display">
 <<<<<<< HEAD
 					   <p class="heading">2019年11月全國公立動物收容所收容處理情形</p>
-					    <div id="rleftpane">
-                           <p class="content">當月被認養數</p>
+					  
+                           <p class="content" id ="chartName">【當月被認養數】</p>
 					       <div class="test" style="text-align:left"></div>
-						</div>
-					    <div id="rrightpane">
-					        <p class="content">當月被認養率</p>
+						    <input type="button" value="切換至收容數" id="change_to_v">
+							<input type="button" value="切換至被認養數" id="change_to_w">
+						
+					  
+					        <p class="content">【當月被認養率】</p>
 				            <div class="test2" style="text-align:left"></div>
-					    </div>
+					  
 =======
 >>>>>>> 7d57ebd445a8bd9ffec3f1b3d4ad52d81014df23
                         <p class="content">Statistics of cases reported and managed are showcased visually below.</p>
