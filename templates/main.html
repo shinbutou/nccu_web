@@ -110,7 +110,9 @@
             
             //  Bar Chart
 			
-            var data = {{ data2 | tojson }} ;
+            var data = {{ data | tojson }} ;
+			
+			var counter = { ""
             
             // x: 編號; n: 市名; v: 收容數; w: 認養數; p: 認養率 
 
@@ -131,14 +133,14 @@
             
             document.getElementById("change_to_w").onclick = function(){
                 if( nowChart == 2){
-                    document.getElementById("chartName").innerHTML="【當月被認養數】";
+                    document.getElementById("chartName").innerHTML="【總案件數】";
                     nowChart = 1;
                     _transition();
                 }
             }
             document.getElementById("change_to_v").onclick = function(){
                 if( nowChart ==1 ){
-                    document.getElementById("chartName").innerHTML="【當月收容數】";
+                    document.getElementById("chartName").innerHTML="【已解決案件數】";
                     nowChart = 2;
                     _transition();
                 }
@@ -428,11 +430,11 @@
                         <p class="content">Statistics of cases reported and managed are showcased visually below.</p>
                         
                         <p class="heading">2019年11月全國公立動物收容所收容處理情形</p>
-                        <p class="content" id ="chartName">【當月被認養數】</p>
+                        <p class="content" id ="chartName">【總案件數】</p>
                         <div class="test" style="text-align:left"></div>
                         <input type="button" value="切換至收容數" id="change_to_v">
                         <input type="button" value="切換至被認養數" id="change_to_w">
-                        <p class="content">【當月被認養率】</p>
+                        <p class="content">【台北各區案件數】</p>
                         <div class="test2" style="text-align:left"></div>
                         <canvas id="scanvas_1"></canvas>
                     </div>
