@@ -111,6 +111,7 @@
             //  Bar Chart
 			
             var data = {{ data | tojson }} ;
+			var no = {{ data2 | tojson }} ;
 			
 			var counter = {
 			 "中正區":0 ,
@@ -127,12 +128,15 @@
 			 "文山區":0 
 			 }
 			
-            
-			for (var ptr in data){ counter[ptr.dis]++;}
+            console.log(data);
+			for (var ptr in data){
+			   counter[ data[ptr].dis ]+=1;
+			}
+			console.log(counter);
 			
 			
             // x: 編號; n: 市名; v: 收容數; w: 認養數; p: 認養率 
-
+           /*
             var s = d3.select('.test')
                     .append('svg')
                     .attr({
@@ -248,8 +252,7 @@
                 };
                 });			  
                     
-            }
-            
+            } 
                 
             name.selectAll('text')  ///name
             .data(data)
@@ -266,7 +269,7 @@
             }).style({
             'font-size':'12px'
             });
-        
+        */
 
             //  Pie Chart
 			
@@ -282,13 +285,14 @@
                     .attr("height", h)
                 .append("svg:g")                
                     .attr("transform", "translate(" + r + "," + r + ")")    
-
+            console.log("vis");
+			
             var arc = d3.svg.arc()              
                 .outerRadius(r);
 
             var pie = d3.layout.pie()           
-                .value(function(d) { return counter[d]; });    
-
+                .value(function(d) { return counter[d]; console.log(counter[d]);});    
+            console.log("pie");
             var arcs = vis.selectAll("g.slice")     
                 .data(pie)                           
                 .enter()                            
@@ -307,7 +311,7 @@
                         return "translate(" + arc.centroid(d) + ")";       
                     })
                     .attr("text-anchor", "middle")                         
-                    .text(function(d, i) { return d+" "+counter[d]; })
+                    .text(function(d, i) { return d+" "+counter[d]; console.log(d);})
                     .style({
                             'font-size':'12px'
                     });        
