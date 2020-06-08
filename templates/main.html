@@ -369,12 +369,14 @@
                         </p>
                         <hr>
                         <div id="rleftpane">
-                            <table style="margin-top: 10px; width: 560px;">
+                            <form action="main.html" method="get">
+								<table style="margin-top: 10px; width: 560px;">
+						
                                 <tr>
                                     <td><p class="label">Topic</p></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="rinput" value="" id="con"></td>
+                                    <td><input type="text" class="rinput" value="" id="con" name="con"></td>
                                 </tr>
                                 <tr>
                                     <td><p class="label"><br>Description</p></td>
@@ -386,7 +388,7 @@
                                     <td><p class="label"><br>Labels</p></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="rinput" value="" id="loc" ></td>
+                                    <td><input type="text" class="rinput" value="" id="loc" name="loc" ></td>
                                 </tr>
                             </table>
                             <table>
@@ -395,16 +397,17 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="rcinput" value="longitude" id="lon">
+                                        <input type="text" class="rcinput" value="longitude" id="lon" name="lon">
                                     </td>
                                     <td>
-                                        <input type="text" class="rcinput" value="latitude" id="lat">
+                                        <input type="text" class="rcinput" value="latitude" id="lat" name="lat">
                                     </td>
                                     <td>
-                                        <input type="button" class="label" value="submit" id="rsubmit" onclick= "AddData()">
+                                        <input type="submit" class="label" value="submit" id="rsubmit">
                                     </td>
-                                </tr>
+                                </tr>			
                             </table>
+							</form>
                         </div>
                         <div id="rrightpane">
                             <div id="rmapcanvas"></div>
