@@ -112,8 +112,25 @@
 			
             var data = {{ data | tojson }} ;
 			
-			var counter = { ""
+			var counter = {
+			 "中正區":0 ,
+			 "大同區":0 ,
+			 "中山區":0 ,
+			 "松山區":0 },
+			 "大安區":0 ,
+			 "萬華區":0 ,
+			 "信義區":0 ,
+			 "士林區":0 ,
+			 "北投區":0 ,
+			 "內湖區":0 ,
+			 "南港區":0 ,
+			 "文山區":0 
+			 }
+			
             
+			for (var ptr in data){ counter[ptr]++;}
+			
+			
             // x: 編號; n: 市名; v: 收容數; w: 認養數; p: 認養率 
 
             var s = d3.select('.test')
@@ -252,6 +269,7 @@
         
 
             //  Pie Chart
+			
             var w = 300,                        
                 h = 300,                            
                 r = 100,                            
