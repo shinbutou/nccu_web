@@ -1,2 +1,5 @@
-#files for flask environment
+# files for flask environment
 flask/
+
+# python generated files
+__pycache__/
