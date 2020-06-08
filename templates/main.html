@@ -449,12 +449,10 @@
                         <hr>
                         <div id="rleftpane">
                             <div class="manage_panel" name="manage_panel">
-                                {% for news in top_news_list_2 %}
-                                    <a style="text-decoration: none" href={{ news['link']}}>
-                                        <div style="font-size: 10pt; text-align: justify; color:#222222; text-decoration: none; margin: 1px; padding: 9px; background-color: gainsboro; cursor: pointer;">
-                                            {{ news['title']}}
-                                        </div>
-                                    </a>
+                                {% for news in data %}
+                                    <div style="font-size: 10pt; text-align: justify; color:#222222; text-decoration: none; margin: 1px; padding: 9px; background-color: gainsboro; cursor: pointer;">
+                                        {{ news['Description']}}
+                                    </div>
                                 {% endfor %}
                             </div>
                         </div>
