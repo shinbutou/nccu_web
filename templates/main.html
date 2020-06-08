@@ -90,7 +90,7 @@
                     var info2 =
                     "<b>Topic: "+ Data[p]['Condition'] 
                     + "</b><br>Description: "+Data[p]['Description']
-                    +"<br>Location："+Data[p]['Location']+"";
+                    +"<br>Location："+Data[p]['dis']+"";
             
                     var marker = L.marker([x, y], {icon: myIconA,}).bindPopup(info2);
                     ClusterGroup.addLayer(marker);
@@ -113,6 +113,8 @@
             var data = {{ data | tojson }} ;
 			var no = {{ data2 | tojson }} ;
 			
+			console.log(data);
+			
 			var counter = {
 			 "中正區":0 ,
 			 "大同區":0 ,
@@ -127,21 +129,37 @@
 			 "南港區":0 ,
 			 "文山區":0 
 			 }
-			
-            console.log(data);
+			 
+			var a_day = new Array(10);
+			var s_day = new Array(10);
+			for (var i=1;i<10;i++){
+	            a_day[ i ]=0;
+				s_day[ i ]=0;
+			}
+			   
 			for (var ptr in data){
 			   counter[ data[ptr].dis ]+=1;
+			   a_day[ data[ptr].dat]+=1;
+			   if( data[ptr].sv==1 ){ s_day[ data[ptr].dat ]+=1;}
 			}
-			console.log(counter);
+	
+		    var counter_array = [ ];
+			var day_array = [];
 			
-			
-            // x: 編號; n: 市名; v: 收容數; w: 認養數; p: 認養率 
-           /*
+			for (var ptr in counter){
+                counter_array.push({"n":ptr,"c":counter[ptr]})	;	                			
+			}
+			for (var i=1;i<10;i++){
+			    day_array.push({"x":i,"a": a_day[i],"s": s_day[i]})	;	
+			}
+	        console.log(s_day);	
+			console.log(day_array);
+        
             var s = d3.select('.test')
                     .append('svg')
                     .attr({
-                        'width':800,
-                        'height':250
+                        'width':400,
+                        'height':350
                     });
                     
             var num = s.append('g')
@@ -151,25 +169,25 @@
             .attr({'id':'name'});
             
             var nowChart = 1;
-            
+              
             document.getElementById("change_to_w").onclick = function(){
                 if( nowChart == 2){
-                    document.getElementById("chartName").innerHTML="【總案件數】";
+                    document.getElementById("chartName").innerHTML="【本月各日總案件數】";
                     nowChart = 1;
                     _transition();
                 }
             }
             document.getElementById("change_to_v").onclick = function(){
                 if( nowChart ==1 ){
-                    document.getElementById("chartName").innerHTML="【已解決案件數】";
+                    document.getElementById("chartName").innerHTML="【本月各日解決案件數】";
                     nowChart = 2;
                     _transition();
                 }
             }
-
+            
 
             s.selectAll('rect')
-            .data(data)
+            .data(day_array)
             .enter()
             .append('rect')
             .attr({
@@ -185,12 +203,12 @@
             .duration(1500)
             .attr({
             'width':function(d){
-                return d.w/2 ;
+                return d.a*20 ;
             }
             });
 
             num.selectAll('text')
-            .data(data)
+            .data(day_array)
             .enter()
             .append('text')
             .text(function(d){
@@ -207,11 +225,11 @@
             .duration(1500)
             .attr({
             'x':function(d){
-                return d.w/2 + 48;
+                return d.a*20 + 48;
             }
             })
             .tween('number',function(d){
-                var i = d3.interpolateRound(0, d.w);
+                var i = d3.interpolateRound(0, d.a);
                 return function(t) {
                 this.textContent = i(t);
                 };
@@ -220,33 +238,33 @@
             function _transition(){
 
                 s.selectAll('rect')
-                .data(data)
+                .data(day_array)
                 .transition()
                 .duration(1500)
                 .attr({
                 'width':function(d){
-                    if( nowChart==1){ return d.w/2 ; }
-                    else{ return d.v/2 ; }
+                    if( nowChart==1){ return d.a*20 ; }
+                    else{ return d.s*20 ; }
                 }
                 });
 
                 s.selectAll('text')
-                .data(data)
+                .data(day_array)
                 .transition()
                 .duration(1500)
                 .attr({
                 'x':function(d){
                     if( nowChart==1){
-                    return d.w/2 + 48;
+                    return d.a*20 + 48;
                     }
                     else{
-                    return d.v/2 + 48;
+                    return d.s*20 + 48;
                     }
                     }
                 })
                 .tween('number',function(d){
-                    if( nowChart==1){ var i = d3.interpolateRound(0, d.w);}
-                    else{var i = d3.interpolateRound(0, d.v);}
+                    if( nowChart==1){ var i = d3.interpolateRound(0, d.a);}
+                    else{var i = d3.interpolateRound(0, d.s);}
                     return function(t) {
                     this.textContent = i(t);
                 };
@@ -255,7 +273,7 @@
             } 
                 
             name.selectAll('text')  ///name
-            .data(data)
+            .data(day_array)
             .enter()
             .append('text')
             .attr({
@@ -265,34 +283,33 @@
                 return (d.x-1) * 35 +20;
             }
             }).text(function(d){
-            return d.n;
+            return d.x;
             }).style({
             'font-size':'12px'
             });
-        */
+        
 
             //  Pie Chart
 			
             var w = 300,                        
                 h = 300,                            
-                r = 100,                            
+                r = 150,                            
             color = d3.scale.category20c();     
 
             var vis = d3.select(".test2")
                 .append("svg:svg")              
-                .data(counter)   //                
+                .data([counter_array])   //                
                     .attr("width", w)           
                     .attr("height", h)
                 .append("svg:g")                
                     .attr("transform", "translate(" + r + "," + r + ")")    
-            console.log("vis");
 			
             var arc = d3.svg.arc()              
                 .outerRadius(r);
 
             var pie = d3.layout.pie()           
-                .value(function(d) { return counter[d]; console.log(counter[d]);});    
-            console.log("pie");
+                .value(function(d){ return d.c;});    
+
             var arcs = vis.selectAll("g.slice")     
                 .data(pie)                           
                 .enter()                            
@@ -311,10 +328,14 @@
                         return "translate(" + arc.centroid(d) + ")";       
                     })
                     .attr("text-anchor", "middle")                         
-                    .text(function(d, i) { return d+" "+counter[d]; console.log(d);})
+                    .text(function(d, i) { 
+					if(counter_array[i].c==0){return "";}
+					else{return counter_array[i].n+" "+counter_array[i].c;}
+					})
                     .style({
                             'font-size':'12px'
-                    });        
+                    });  
+             console.log("end");					
             },false);
         </script>
 		<!--D3 code above-->
@@ -408,18 +429,18 @@
                                 <tr>
                                     <td>
                                         <select class="rcinput" id="dis" name="dis">
-                                            <option value="zhongcheng">中正區</option>
-                                            <option value="datong">大同區</option>
-                                            <option value="zhongshan">中山區</option>
-                                            <option value="songshan">松山區</option>
-                                            <option value="daan">大安區</option>
-                                            <option value="wanhua">萬華區</option>
-                                            <option value="xinyi">信義區</option>
-                                            <option value="shilin">士林區</option>
-                                            <option value="beitou">北投區</option>
-                                            <option value="neihou">內湖區</option>
-                                            <option value="nankang">南港區</option>
-                                            <option value="wenshan">文山區</option>
+                                            <option value="中正區">中正區</option>
+                                            <option value="大同區">大同區</option>
+                                            <option value="中山區">中山區</option>
+                                            <option value="松山區">松山區</option>
+                                            <option value="大安區">大安區</option>
+                                            <option value="萬華區">萬華區</option>
+                                            <option value="信義區">信義區</option>
+                                            <option value="士林區">士林區</option>
+                                            <option value="北投區">北投區</option>
+                                            <option value="內湖區">內湖區</option>
+                                            <option value="南港區">南港區</option>
+                                            <option value="文山區">文山區</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -468,29 +489,18 @@
                 <div id="tabs-4">
                     <div class="display">
                         <p class="content">Statistics of cases reported and managed are showcased visually below.</p>
-<<<<<<< HEAD
-                        
-                        <p class="heading">2019年11月全國公立動物收容所收容處理情形</p>
-                        <p class="content" id ="chartName">【總案件數】</p>
-                        <div class="test" style="text-align:left"></div>
-                        <input type="button" value="切換至收容數" id="change_to_v">
-                        <input type="button" value="切換至被認養數" id="change_to_w">
-                        <p class="content">【台北各區案件數】</p>
-                        <div class="test2" style="text-align:left"></div>
-                        <canvas id="scanvas_1"></canvas>
-=======
+
                         <div id="rleftpane">
-                            <p class="heading">2019年11月全國公立動物收容所收容處理情形</p>
-                            <p class="content" id ="chartName">【當月被認養數】</p>
-                            <div class="test" style="text-align:left"></div>
-                            <input type="button" value="切換至收容數" id="change_to_v">
-                            <input type="button" value="切換至被認養數" id="change_to_w">
+							<p class="heading">2020年6月回報案件相關數據</p>
+							<p class="content" id ="chartName">【本月各日總案件數】</p>
+							<div class="test" style="text-align:left"></div>
+							<input type="button" value="本月各日解決案件數" id="change_to_v">
+							<input type="button" value="本月各日總案件數" id="change_to_w">							
                         </div>
                         <div id="rrightpane">
-                            <p class="content">【當月被認養率】</p>
-                            <div class="test2" style="text-align:left"></div>  
+                            <p class="content">【台北各區案件數】</p>
+							<div class="test2" style="text-align:left"></div>
                         </div>
->>>>>>> 0a8f12bdb44b9c345577ae8a831eb841d928ab9b
                     </div>
                 </div>
                 <div id="tabs-5">
