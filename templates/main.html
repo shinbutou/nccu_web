@@ -103,28 +103,31 @@
         <!--Leaflet code above-->
 		
 		 <!--D3 code under-->
-		<meta charset="UTF-8">
-  <meta name="author" content="oxxo.studio">
-  <meta name="copyright" content="oxxo.studio">
-
-  <script src="{{ url_for('static', filename='d3min.js') }}"></script>
-  <script>
+	  <meta charset="UTF-8">
+	  <script src="{{ url_for('static', filename='d3min.js') }}"></script>
+	  <script>
 		window.addEventListener('load',function(){
+		
+		 ////////////////////////////  Bar Chart
 
 		  var data=[
-			{x:1, w:66},
-			{x:2, w:99},
-			{x:3, w:1},
-			{x:4, w:5},
-			{x:5, w:50},
+			{x:1, n:'新北市', w:379, p:62},
+			{x:2, n:'臺北市', w:49, p:27},
+			{x:3, n:'桃園市', w:136, p:29},
+			{x:4, n:'臺中市', w:135, p:17},
+			{x:5, n:'臺南市', w:195, p:29},
+			{x:6, n:'高雄市', w:177, p:32}
 		  ];
 
 		  var s = d3.select('.test')
 					.append('svg')
 					.attr({
-					  'width':300,
-					  'height':300
+					  'width':500,
+					  'height':250
 					});
+					
+		   var name = s.append('g')
+            .attr({ });
 
 		  s.selectAll('rect')
 		   .data(data)
@@ -134,7 +137,7 @@
 			'fill':'#09c',
 			'width':0,
 			'height':30,
-			'x':0,
+			'x':45,
 			'y':function(d){
 			  return (d.x-1) * 35;
 			}
@@ -152,11 +155,11 @@
 		   .enter()
 		   .append('text')
 		   .text(function(d){
-			return 0  ;
+			return 0 ;
 		   })
 		   .attr({
 			'fill':'#000',
-			'x':3,
+			'x':48,
 			'y':function(d){
 			  return d.x * 35 - 12;
 			}
@@ -165,7 +168,7 @@
 		   .duration(1500)
 		   .attr({
 			'x':function(d){
-			  return d.w + 3;
+			  return d.w + 48;
 			}
 		   })
 		   .tween('number',function(d){
@@ -174,7 +177,69 @@
 				this.textContent = i(t);
 			  };
 		   });
-		},false);
+		   
+		      
+	      name.selectAll('text')  ///name
+		  .data(data)
+		  .enter()
+		  .append('text')
+		  .attr({
+			'fill':'#000000',		
+			'x':0,
+			'y':function(d){
+			  return (d.x-1) * 35 +20;
+			}
+		  }).text(function(d){
+			return d.n;
+		  }).style({
+			'font-size':'12px'
+		  });
+
+		   ////////////////////////////  Pie Chart
+		   
+			var w = 300,                        
+			 h = 300,                            
+			 r = 100,                            
+			color = d3.scale.category20c();     
+
+			var vis = d3.select(".test2")
+				.append("svg:svg")              
+				.data([data])                   
+					.attr("width", w)           
+					.attr("height", h)
+				.append("svg:g")                
+					.attr("transform", "translate(" + r + "," + r + ")")    
+
+			var arc = d3.svg.arc()              
+				.outerRadius(r);
+
+			var pie = d3.layout.pie()           
+				.value(function(d) { return d.p; });    
+
+			var arcs = vis.selectAll("g.slice")     
+				.data(pie)                           
+				.enter()                            
+					.append("svg:g")                
+						.attr("class", "slice");    
+
+				arcs.append("svg:path")
+						.attr("fill", function(d, i) { return color(i); } ) 
+						.attr("d", arc);                                    
+
+				arcs.append("svg:text")                                     
+						.attr("transform", function(d) {                    
+					
+						d.innerRadius = 0;
+						d.outerRadius = r;
+						return "translate(" + arc.centroid(d) + ")";       
+					})
+					.attr("text-anchor", "middle")                         
+					.text(function(d, i) { return data[i].n+" "+data[i].p+"%"; })
+					.style({
+				         'font-size':'12px'
+			         });        
+					   
+          },false);
 		
 		</script>
 		
@@ -307,17 +372,15 @@
                 </div>
                 <div id="tabs-4">
                     <div class="display">
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-					  <div class="test">					
-                      </div>
-                        <p class="heading">hi</p>
-                        <p class="content">hi</p>
-		
-=======
-=======
->>>>>>> 84a4fa5c69750853a0827bdd9849eee5315ccc19
+					   <p class="heading">2019年11月全國公立動物收容所收容處理情形</p>
+					    <div id="rleftpane">
+                           <p class="content">當月被認養數</p>
+					       <div class="test" style="text-align:left"></div>
+						</div>
+					    <div id="rrightpane">
+					        <p class="content">當月被認養率</p>
+				            <div class="test2" style="text-align:left"></div>
+					    </div>
                         <p class="content">Statistics of cases reported and managed are showcased visually below.</p>
                         <canvas id="scanvas_1"></canvas>
                     </div>
