@@ -109,14 +109,8 @@
             window.addEventListener('load',function(){
             
             //  Bar Chart
-            var data=[
-                {x:1, n:'新北市', v:609, w:379, p:62},
-                {x:2, n:'臺北市', v:179, w:49, p:27},
-                {x:3, n:'桃園市', v:474, w:136, p:29},
-                {x:4, n:'臺中市', v:806, w:135, p:17},
-                {x:5, n:'臺南市', v:681, w:195, p:29},
-                {x:6, n:'高雄市', v:560, w:177, p:32}
-            ];
+			
+            var data = {{ data2 | tojson }} ;
             
             // x: 編號; n: 市名; v: 收容數; w: 認養數; p: 認養率 
 
@@ -168,7 +162,7 @@
             .duration(1500)
             .attr({
             'width':function(d){
-                return d.w;
+                return d.w/2 ;
             }
             });
 
@@ -190,7 +184,7 @@
             .duration(1500)
             .attr({
             'x':function(d){
-                return d.w + 48;
+                return d.w/2 + 48;
             }
             })
             .tween('number',function(d){
@@ -208,8 +202,8 @@
                 .duration(1500)
                 .attr({
                 'width':function(d){
-                    if( nowChart==1){ return d.w ; }
-                    else{ return d.v ; }
+                    if( nowChart==1){ return d.w/2 ; }
+                    else{ return d.v/2 ; }
                 }
                 });
 
@@ -220,10 +214,10 @@
                 .attr({
                 'x':function(d){
                     if( nowChart==1){
-                    return d.w + 48;
+                    return d.w/2 + 48;
                     }
                     else{
-                    return d.v + 48;
+                    return d.v/2 + 48;
                     }
                     }
                 })
