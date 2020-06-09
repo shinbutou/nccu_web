@@ -138,6 +138,12 @@
 			
         </script>
         <!--Leaflet code above-->
+
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!--Bootstrap code-->
         
         
         <meta charset="UTF-8">
@@ -459,60 +465,58 @@
                             the incident locates.
                         </p>
                         <div id="rleftpane">
-                            <br>
                             <form action="main.html" method="get">
 								<table style="margin-top: 10px; width: 560px;">
-						
-                                <tr>
-                                    <td><p class="label">Topic</p></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="rinput" value="" id="con" name="con"></td>
-                                </tr>
-                                <tr>
-                                    <td><p class="label"><br>Description</p></td>
-                                </tr>
-                                <tr>
-                                    <td><textarea id="des" name="des"></textarea></td>
-                                </tr>
-                                <tr>
-                                    <td><p class="label"><br>Areas</p></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <select class="rcinput" id="dis" name="dis" value="">
-                                            <option value="中正區">中正區</option>
-                                            <option value="大同區">大同區</option>
-                                            <option value="中山區">中山區</option>
-                                            <option value="松山區">松山區</option>
-                                            <option value="大安區">大安區</option>
-                                            <option value="萬華區">萬華區</option>
-                                            <option value="信義區">信義區</option>
-                                            <option value="士林區">士林區</option>
-                                            <option value="北投區">北投區</option>
-                                            <option value="內湖區">內湖區</option>
-                                            <option value="南港區">南港區</option>
-                                            <option value="文山區">文山區</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                            <table>
-                                <tr>
-                                    <td><p class="label"><br>Coordinates</p></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="rcinput" id="lon" name="lon">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="rcinput" id="lat" name="lat">
-                                    </td>
-                                    <td>
-                                        <input type="submit" class="label" value="submit" id="rsubmit">
-                                    </td>
-                                </tr>			
-                            </table>
+                                    <tr>
+                                        <td><p class="label">Topic</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="rinput" value="" id="con" name="con"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p class="label"><br>Description</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><textarea id="des" name="des"></textarea></td>
+                                    </tr>
+                                </table>
+                                <br><br>
+                                <table>
+                                    <tr>
+                                        <td style="width: 33%;"><p class="label">Coordinates</p></td>
+                                        <td style="width: 33%;"><p class="label">Area</p></td>
+                                        <td style="width: 33%;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="rcinput" id="lat" name="lat">
+                                        </td>
+                                        <td>
+                                            <select class="rcinput" id="dis" name="dis" value="">
+                                                <option value="中正區">中正區</option>
+                                                <option value="大同區">大同區</option>
+                                                <option value="中山區">中山區</option>
+                                                <option value="松山區">松山區</option>
+                                                <option value="大安區">大安區</option>
+                                                <option value="萬華區">萬華區</option>
+                                                <option value="信義區">信義區</option>
+                                                <option value="士林區">士林區</option>
+                                                <option value="北投區">北投區</option>
+                                                <option value="內湖區">內湖區</option>
+                                                <option value="南港區">南港區</option>
+                                                <option value="文山區">文山區</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="submit" class="label" value="submit" id="rsubmit">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="rcinput" id="lon" name="lon">
+                                        </td>
+                                    </tr>
+                                </table>
 							</form>
                         </div>
                         <div id="rrightpane">
@@ -531,7 +535,32 @@
                                             <tr>
                                                 <td width="11%" align="center">{{ case['mth']}}/{{ case['dat']}}</td>
                                                 <td width="66%">{{ case['Condition']}}</td>
-                                                <td width="22%" align="right"><input type="button" value="Details"></td>
+                                                <td width="22%" align="right">
+                                                <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter">
+                                                        Details
+                                                    </button>
+                                                </td>
+                                                    
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                        <div class="modal-body">
+                                                            {{ case['Description']}}
+                                                        </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </tr>
                                         </table>
                                     </div>
@@ -592,8 +621,8 @@
                         </p>
                         <br><hr><br>
                         <p class="heading">Contact</p>
-                        <p class="content">To get help or to make feature suggestions, you could contact us through university email, id 106308049 and 
-                            107702000, respectively.
+                        <p class="content">To get help or to make feature suggestions, you could contact us through university email, student id 106308049 
+                            and 107702009, respectively.
                         </p>
                     </div>
                 </div>
