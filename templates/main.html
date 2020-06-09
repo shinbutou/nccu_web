@@ -345,7 +345,7 @@
     <body onload="initialize()">
         <!--Header Section-->
         <div class="toppane">
-            <p id="header">National Chengchi University Animal Reporting Platform</p>
+            <p id="header">Animal Reporting Platform of Taipei City</p>
         </div>
         
         <!--Tabs Section-->
@@ -365,7 +365,7 @@
                             of wild or stray animal presence. In case of danger or incidents where human intervention was needed, students are prone to 
                             share information on social media. But due to the general lack of management and the use of applications that weren't designed 
                             for this specific purpose, the spread of information can often be quite inefficient. To solve this problem, we've built this very 
-                            site, in hope to better the aforementioned situation.
+                            site, in hope to better the aforementioned situation, and to serve a larger, more general crowd at the same time.
                         </p>
                         <br><hr><br>
                         <p class="heading">Site Map</p>
@@ -474,9 +474,15 @@
                         <hr>
                         <div id="rleftpane">
                             <div class="manage_panel" name="manage_panel">
-                                {% for news in data %}
-                                    <div style="font-size: 10pt; text-align: justify; color:#222222; text-decoration: none; margin: 1px; padding: 9px; background-color: gainsboro; cursor: pointer;">
-                                        {{ news['Description']}}
+                                {% for case in data %}
+                                    <div style="text-align: justify; color:#222222; text-decoration: none; margin: 1px; padding: 4px; background-color: gainsboro; cursor: pointer;">
+                                        <table id="block">
+                                            <tr>
+                                                <td width="11%" align="center">{{ case['mth']}}/{{ case['dat']}}</td>
+                                                <td width="66%">{{ case['Condition']}}</td>
+                                                <td width="22%" align="right"><input type="button" value="Details"></td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 {% endfor %}
                             </div>
