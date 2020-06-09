@@ -195,7 +195,7 @@
             var s = d3.select('.test')
                     .append('svg')
                     .attr({
-                        'width':400,
+                        'width':600,
                         'height':350
                     });
                     
@@ -240,7 +240,7 @@
             .duration(1500)
             .attr({
             'width':function(d){
-                return d.a*20 ;
+                return d.a*40 ;
             }
             });
 
@@ -262,7 +262,7 @@
             .duration(1500)
             .attr({
             'x':function(d){
-                return d.a*20 + 48;
+                return d.a*40 + 48;
             }
             })
             .tween('number',function(d){
@@ -280,7 +280,7 @@
                 .duration(1500)
                 .attr({
                 'width':function(d){
-                    if( nowChart==1){ return d.a*20 ; }
+                    if( nowChart==1){ return d.a*40 ; }
                     else{ return d.s*20 ; }
                 }
                 });
@@ -292,10 +292,10 @@
                 .attr({
                 'x':function(d){
                     if( nowChart==1){
-                      return d.a*20 + 48;
+                      return d.a*40 + 48;
                     }
                     else{
-                      return d.s*20 + 48;
+                      return d.s*40 + 48;
                     }
                  },
 				'y':function(d){
