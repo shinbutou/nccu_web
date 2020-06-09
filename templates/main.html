@@ -76,13 +76,13 @@
 				// 定義成功的回呼函式
 				function showPosition(position) {
 				if(n == 1){
-				  L.marker([position.coords.latitude, position.coords.longitude], {icon:myIconC,}
+				  L.marker([position.coords.latitude, position.coords.longitude], {}
 				  ).addTo(report_map).bindPopup("<b>You're here!</b>").openPopup();
 				  report_map.setView([position.coords.latitude, position.coords.longitude], 12);
 				  
 				}
 				else{
-				 L.marker([position.coords.latitude, position.coords.longitude], {icon:myIconC,}
+				 L.marker([position.coords.latitude, position.coords.longitude], {}
 				  ).addTo(manage_map).bindPopup("<b>You're here!</b>").openPopup();
 				  manage_map.setView([position.coords.latitude, position.coords.longitude], 12);
 				  
@@ -114,7 +114,7 @@
 						+ "</b><br>Description: "+Data[p]['Description']
 						+"<br>Location："+Data[p]['dis']+"";
 				
-						var marker = L.marker([x, y], {icon: myIconA,}).bindPopup(info2);
+						var marker = L.marker([x, y], {}).bindPopup(info2);
 						ClusterGroup1.addLayer(marker);
 					}			
 					report_map.addLayer(ClusterGroup1);	
@@ -128,7 +128,7 @@
 						+ "</b><br>Description: "+Data[p]['Description']
 						+"<br>Location："+Data[p]['dis']+"";
 				
-						var marker = L.marker([x, y], {icon: myIconA,}).bindPopup(info2);
+						var marker = L.marker([x, y], {}).bindPopup(info2);
 						ClusterGroup2.addLayer(marker);
 					}			
 					manage_map.addLayer(ClusterGroup2);					
