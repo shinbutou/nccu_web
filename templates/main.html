@@ -30,9 +30,11 @@
             var Data = {{ data | tojson }};
 			
             var report_map;
-            var ClusterGroup = L.markerClusterGroup();
+            var ClusterGroup1 = L.markerClusterGroup();
+			var ClusterGroup2 = L.markerClusterGroup();
             var markerLayer = new L.LayerGroup();
             var clusterON = false;
+			var manage_map;
 			
 
             var myIconA = L.icon({iconUrl: 'https://i.imgur.com/5MxyKei.png'});
@@ -41,31 +43,50 @@
             function initialize(){
                 report_map = L.map("rmapcanvas").setView([24.99, 121.55], 15);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 8, maxZoom: 16}).addTo(report_map);
-                addCluster();
-                getUserPosition();
+
+                getUserPosition(1);
                 clusterON = true;
-                report_map.on('click', onMapClick);
+                report_map.on('click', onMapClick_R);
+				
+				manage_map = L.map("mmapcanvas").setView([24.99, 121.55], 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 8, maxZoom: 16}).addTo(manage_map);
+                addCluster(2);
+                getUserPosition(2);
+                clusterON = true;
+                manage_map.on('click', onMapClick_M);
             }
             
-            var temp  = new L.marker([0,0]);
+            var temp_R  = new L.marker([0,0]);
+			var temp_M  = new L.marker([0,0]);
 
-            function onMapClick(e){
-                temp.setLatLng(e.latlng).addTo(report_map).bindPopup("<b>Incident Location</b>").openPopup();
+            function onMapClick_R(e){
+                temp_R.setLatLng(e.latlng).addTo(report_map).bindPopup("<b>Incident Location</b>").openPopup();
                 document.getElementById("lat").value = e.latlng.lat;
                 document.getElementById("lon").value = e.latlng.lng;
             
             }
+			function onMapClick_M(e){
+                temp_M.setLatLng(e.latlng).addTo(manage_map).bindPopup("<b>Incident Location</b>").openPopup();  
+            }
 			
-			function getUserPosition() {
+			function getUserPosition(n) {
 				// 檢查瀏覽器是否支援 Geolocation API
 				if(navigator.geolocation) {
 
 				// 定義成功的回呼函式
 				function showPosition(position) {
+				if(n == 1){
 				  L.marker([position.coords.latitude, position.coords.longitude], {icon:myIconC,}
 				  ).addTo(report_map).bindPopup("<b>You're here!</b>").openPopup();
 				  report_map.setView([position.coords.latitude, position.coords.longitude], 12);
 				  
+				}
+				else{
+				 L.marker([position.coords.latitude, position.coords.longitude], {icon:myIconC,}
+				  ).addTo(manage_map).bindPopup("<b>You're here!</b>").openPopup();
+				  manage_map.setView([position.coords.latitude, position.coords.longitude], 12);
+				  
+				}
 				  document.getElementById("lat").value = position.coords.latitude;
 				  document.getElementById("lon").value = position.coords.longitude;
 				}
@@ -83,19 +104,35 @@
             }
               
             // Cluster
-            function addCluster(){
-                for(var p in Data){
-                    var x = parseFloat(Data[p]['lat']);
-                    var y = parseFloat(Data[p]['lon']);
-                    var info2 =
-                    "<b>Topic: "+ Data[p]['Condition'] 
-                    + "</b><br>Description: "+Data[p]['Description']
-                    +"<br>Location："+Data[p]['dis']+"";
-            
-                    var marker = L.marker([x, y], {icon: myIconA,}).bindPopup(info2);
-                    ClusterGroup.addLayer(marker);
-                }			
-                report_map.addLayer(ClusterGroup);	
+            function addCluster(n){
+			     if( n ==1 ){
+					for(var p in Data){
+						var x = parseFloat(Data[p]['lat']);
+						var y = parseFloat(Data[p]['lon']);
+						var info2 =
+						"<b>Topic: "+ Data[p]['Condition'] 
+						+ "</b><br>Description: "+Data[p]['Description']
+						+"<br>Location："+Data[p]['dis']+"";
+				
+						var marker = L.marker([x, y], {icon: myIconA,}).bindPopup(info2);
+						ClusterGroup1.addLayer(marker);
+					}			
+					report_map.addLayer(ClusterGroup1);	
+				}
+				else{
+					for(var p in Data){
+						var x = parseFloat(Data[p]['lat']);
+						var y = parseFloat(Data[p]['lon']);
+						var info2 =
+						"<b>Topic: "+ Data[p]['Condition'] 
+						+ "</b><br>Description: "+Data[p]['Description']
+						+"<br>Location："+Data[p]['dis']+"";
+				
+						var marker = L.marker([x, y], {icon: myIconA,}).bindPopup(info2);
+						ClusterGroup2.addLayer(marker);
+					}			
+					manage_map.addLayer(ClusterGroup2);					
+				}
             }
 				
 			
@@ -132,15 +169,15 @@
 			 
 			var a_day = new Array(10);
 			var s_day = new Array(10);
-			for (var i=1;i<10;i++){
+			for (var i=0;i<10;i++){
 	            a_day[ i ]=0;
 				s_day[ i ]=0;
 			}
 			   
 			for (var ptr in data){
 			   counter[ data[ptr].dis ]+=1;
-			   a_day[ data[ptr].dat]+=1;
-			   if( data[ptr].sv==1 ){ s_day[ data[ptr].dat ]+=1;}
+			   a_day[ Math.floor((data[ptr].dat-1)/3 )]+=1;
+			   if( data[ptr].sv==1 ){ s_day[ Math.floor((data[ptr].dat-1)/3) ]+=1;}
 			}
 	
 		    var counter_array = [ ];
@@ -149,7 +186,7 @@
 			for (var ptr in counter){
                 counter_array.push({"n":ptr,"c":counter[ptr]})	;	                			
 			}
-			for (var i=1;i<10;i++){
+			for (var i=0;i<10;i++){
 			    day_array.push({"x":i,"a": a_day[i],"s": s_day[i]})	;	
 			}
 	        console.log(s_day);	
@@ -196,7 +233,7 @@
             'height':30,
             'x':45,
             'y':function(d){
-                return (d.x-1) * 35;
+                return (d.x) * 35;
             }
             })
             .transition()
@@ -218,7 +255,7 @@
             'fill':'#000',
             'x':48,
             'y':function(d){
-                return d.x * 35 - 12;
+                  return (d.x) * 35 +20;
             }
             })
             .transition()
@@ -255,16 +292,19 @@
                 .attr({
                 'x':function(d){
                     if( nowChart==1){
-                    return d.a*20 + 48;
+                      return d.a*20 + 48;
                     }
                     else{
-                    return d.s*20 + 48;
+                      return d.s*20 + 48;
                     }
-                    }
+                 },
+				'y':function(d){
+                      return (d.x) * 35 +20;
+				 }
                 })
                 .tween('number',function(d){
-                    if( nowChart==1){ var i = d3.interpolateRound(0, d.a);}
-                    else{var i = d3.interpolateRound(0, d.s);}
+                    if( nowChart==1){ var i = d3.interpolateRound(d.s, d.a);}
+                    else{var i = d3.interpolateRound(d.a, d.s);}
                     return function(t) {
                     this.textContent = i(t);
                 };
@@ -280,10 +320,10 @@
             'fill':'#000000',		
             'x':0,
             'y':function(d){
-                return (d.x-1) * 35 +20;
+                return (d.x) * 35 +20;
             }
             }).text(function(d){
-            return d.x;
+            return (((d.x+1)*3-2)+"~"+((d.x+1)*3));
             }).style({
             'font-size':'12px'
             });
@@ -330,7 +370,7 @@
                     .attr("text-anchor", "middle")                         
                     .text(function(d, i) { 
 					if(counter_array[i].c==0){return "";}
-					else{return counter_array[i].n+" "+counter_array[i].c;}
+					else{return (counter_array[i].n+" "+counter_array[i].c);}
 					})
                     .style({
                             'font-size':'12px'
@@ -464,7 +504,7 @@
 							</form>
                         </div>
                         <div id="rrightpane">
-                            <div id="mmapcanvas"></div>
+                            <div id="rmapcanvas"></div>
                         </div>
                     </div>
                 </div>
@@ -488,7 +528,7 @@
                             </div>
                         </div>
                         <div id="rrightpane">
-                            <div id="rmapcanvas"></div>
+                            <div id="mmapcanvas"></div>
                         </div>
                     </div>
                 </div>

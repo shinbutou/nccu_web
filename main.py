@@ -26,7 +26,7 @@ def rsubmit():
         x = datetime.datetime.now() #現在時間
         mth = x.month
         #dat = x.day     
-        dat = random.randint(1,9)       
+        dat = random.randint(1,30)       
         hr = x.hour
         sv = random.randint(0,1) 
 
