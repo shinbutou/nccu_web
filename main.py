@@ -25,8 +25,7 @@ def rsubmit():
         lon = request.values['lon']
         x = datetime.datetime.now() #現在時間
         mth = x.month
-        #dat = x.day     
-        dat = random.randint(1,30)       
+        dat = x.day
         hr = x.hour
         sv = random.randint(0,1) 
 
