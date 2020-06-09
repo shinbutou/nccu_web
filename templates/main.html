@@ -28,6 +28,8 @@
         <script type="text/javascript">
 		 
             var Data = {{ data | tojson }};
+			var R =0;
+			var M =0;
 
             var report_map;
             var ClusterGroup1 = L.markerClusterGroup();
@@ -35,26 +37,29 @@
             var markerLayer = new L.LayerGroup();
             var clusterON = false;
 			var manage_map;
-			
-
-            var myIconA = L.icon({iconUrl: 'https://i.imgur.com/5MxyKei.png'});
-            var myIconC = L.icon({iconUrl: 'https://i.imgur.com/8xoH4xR.png'});
-     
-            function initialize(){
-                report_map = L.map("rmapcanvas").setView([24.99, 121.55], 15);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 8, maxZoom: 16}).addTo(report_map);
-
-                getUserPosition(1);
-                clusterON = true;
-                report_map.on('click', onMapClick_R);
-				
-				manage_map = L.map("mmapcanvas").setView([24.99, 121.55], 15);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 8, maxZoom: 16}).addTo(manage_map);
-                addCluster(2);
-                getUserPosition(2);
-                clusterON = true;
-                manage_map.on('click', onMapClick_M);
+			 
+            function initializeR(){
+				if(R==0){   // not initialize yet
+					report_map = L.map("rmapcanvas").setView([24.99, 121.55], 15);
+					L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 8, maxZoom: 16}).addTo(report_map);
+					getUserPosition(1);
+					clusterON = true;
+					report_map.on('click', onMapClick_R);
+					R=1;
+				}	
             }
+			 
+            function initializeM(){
+				if(M==0){  // not initialize yet
+					manage_map = L.map("mmapcanvas").setView([24.99, 121.55], 15);
+					L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {minZoom: 8, maxZoom: 16}).addTo(manage_map);
+					addCluster(2);
+					getUserPosition(2);
+					clusterON = true;
+					manage_map.on('click', onMapClick_M);
+					M=1;
+				}
+			}
             
             var temp_R  = new L.marker([0,0]);
 			var temp_M  = new L.marker([0,0]);
@@ -154,8 +159,7 @@
             //  Bar Chart
 			
             var data = {{ data | tojson }} ;
-			var no = {{ data2 | tojson }} ;
-			
+	
 			console.log(data);
 			
 			var counter = {
@@ -176,8 +180,8 @@
 			var a_day = new Array(10);
 			var s_day = new Array(10);
 			for (var i=0;i<10;i++){
-	            a_day[ i ]=0;
-				s_day[ i ]=0;
+	            a_day[ i ]=0;   /// a = 全部案件數
+				s_day[ i ]=0;   /// s = 已解決案件數
 			}
 			   
 			for (var ptr in data){
@@ -215,14 +219,14 @@
               
             document.getElementById("change_to_w").onclick = function(){
                 if( nowChart == 2){
-                    document.getElementById("chartName").innerHTML="Reported";
+                    document.getElementById("chartName").innerHTML="【本月全部案件數】";
                     nowChart = 1;
                     _transition();
                 }
             }
             document.getElementById("change_to_v").onclick = function(){
                 if( nowChart ==1 ){
-                    document.getElementById("chartName").innerHTML="Attended to";
+                    document.getElementById("chartName").innerHTML="【本月已解決案件數】";
                     nowChart = 2;
                     _transition();
                 }
@@ -237,7 +241,7 @@
             'fill':'#09c',
             'width':0,
             'height':30,
-            'x':45,
+            'x':60,
             'y':function(d){
                 return (d.x) * 35;
             }
@@ -268,7 +272,7 @@
             .duration(1500)
             .attr({
             'x':function(d){
-                return d.a*40 + 48;
+                return d.a*40 + 65;
             }
             })
             .tween('number',function(d){
@@ -287,7 +291,7 @@
                 .attr({
                 'width':function(d){
                     if( nowChart==1){ return d.a*40 ; }
-                    else{ return d.s*20 ; }
+                    else{ return d.s*40 ; }
                 }
                 });
 
@@ -298,10 +302,10 @@
                 .attr({
                 'x':function(d){
                     if( nowChart==1){
-                      return d.a*40 + 48;
+                      return d.a*40 + 65;
                     }
                     else{
-                      return d.s*40 + 48;
+                      return d.s*40 + 65;
                     }
                  },
 				'y':function(d){
@@ -329,7 +333,7 @@
                 return (d.x) * 35 +20;
             }
             }).text(function(d){
-            return (((d.x+1)*3-2)+"-"+((d.x+1)*3));
+            return (((d.x+1)*3-2)+"日-"+((d.x+1)*3)+"日");
             }).style({
             'font-size':'12px'
             });
@@ -388,7 +392,7 @@
 
     </head>
     
-    <body onload="initialize()">
+    <body>
         <!--Header Section-->
         <div class="toppane">
             <p id="header">Taipei City Animal Reporting Platform</p>
@@ -399,8 +403,8 @@
             <div id="tabs">
                 <ul>
                     <li><a href="#tabs-1">Home</a></li>
-                    <li><a href="#tabs-2">Report</a></li>
-                    <li><a href="#tabs-3">Browse/Manage</a></li>
+                    <li onclick="initializeR()"><a href="#tabs-2">Report</a></li>
+                    <li onclick="initializeM()"><a href="#tabs-3">Browse/Manage</a></li>
                     <li><a href="#tabs-4">Statistics</a></li>
                     <li><a href="#tabs-5">Information</a></li>
                 </ul>
@@ -520,7 +524,7 @@
 							</form>
                         </div>
                         <div id="rrightpane">
-                            <div id="rmapcanvas"></div>
+                            <div id="rmapcanvas" ></div>
                         </div>
                     </div>
                 </div>
@@ -587,13 +591,13 @@
                                         <p class="heading">Number of Cases</p>
                                     </td>
                                     <td>
-                                        <p class="heading" id ="chartName">Reported</p>
+                                        <p class="heading" id ="chartName">【本月全部案件數】</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="button" value="a" id="change_to_w">
-                                        <input type="button" value="b" id="change_to_v">
+                                        <input type="button" value="本月全部案件數" id="change_to_w">
+                                        <input type="button" value="本月已解決案件數" id="change_to_v">
                                     </td>
                                 </tr>
                             </table><br>
