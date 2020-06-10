@@ -106,6 +106,24 @@ textarea{
     display: none;
 }
 
+.bframea{
+    text-align: justify;
+    color:#222222;
+    text-decoration: none;
+    margin: 1px;
+    padding: 4px;
+    background-color: #999999;
+}
+
+.bframeb{
+    text-align: justify;
+    color:#222222;
+    text-decoration: none;
+    margin: 1px;
+    padding: 4px;
+    background-color: gainsboro;
+}
+
 #block{
     width: 99%;
 }

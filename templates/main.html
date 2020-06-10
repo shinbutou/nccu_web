@@ -219,14 +219,14 @@
               
             document.getElementById("change_to_w").onclick = function(){
                 if( nowChart == 2){
-                    document.getElementById("chartName").innerHTML="【本月全部案件數】";
+                    document.getElementById("chartName").innerHTML="本月全部案件數";
                     nowChart = 1;
                     _transition();
                 }
             }
             document.getElementById("change_to_v").onclick = function(){
                 if( nowChart ==1 ){
-                    document.getElementById("chartName").innerHTML="【本月已解決案件數】";
+                    document.getElementById("chartName").innerHTML="本月已解決案件數";
                     nowChart = 2;
                     _transition();
                 }
@@ -534,7 +534,11 @@
                         <div id="rleftpane">
                             <div class="manage_panel" name="manage_panel">
                                 {% for case in data %}
-                                    <div style="text-align: justify; color:#222222; text-decoration: none; margin: 1px; padding: 4px; background-color: gainsboro; cursor: pointer;">
+                                    {% if case['sv'] == 1 %}
+                                    <div class="bframea">
+                                    {% else %}
+                                    <div class="bframeb">
+                                    {% endif %}
                                         <table id="block">
                                             <tr>
                                                 <td width="11%" align="center">{{ case['mth']}}/{{ case['dat']}}</td>
@@ -591,7 +595,7 @@
                                         <p class="heading">Number of Cases</p>
                                     </td>
                                     <td>
-                                        <p class="heading" id ="chartName">【本月全部案件數】</p>
+                                        <p class="heading" id ="chartName">本月全部案件數</p>
                                     </td>
                                 </tr>
                                 <tr>
