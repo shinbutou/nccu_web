@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-   db_file =  open("./schema/Data.json", "r", encoding="utf-8")
+   db_file =  open("./schema/data.json", "r", encoding="utf-8")
    db_array = json.load(db_file)
  
    return render_template("main.html", data = db_array )
@@ -28,7 +28,7 @@ def rsubmit():
         hr = x.hour
         sv = random.randint(0,1) 
         
-        read_file =  open("./schema/Data.json", "r",encoding="utf-8")
+        read_file =  open("./schema/data.json", "r",encoding="utf-8")
         json_array = json.load(read_file)
         
         n = len(json_array)
@@ -50,7 +50,7 @@ def rsubmit():
               
         json_array.append(newData)
         
-        input_file =  open("./schema/Data.json", "w",encoding="utf-8")
+        input_file =  open("./schema/data.json", "w",encoding="utf-8")
         json.dump(json_array,input_file,ensure_ascii=False) 
    
 
