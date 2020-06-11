@@ -53,6 +53,8 @@ def rsubmit():
         input_file =  open("./schema/Data.json", "w",encoding="utf-8")
         json.dump(json_array,input_file,ensure_ascii=False) 
    
+
+
         return render_template("main.html", data = json_array)
  
 
