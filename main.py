@@ -31,7 +31,7 @@ def rsubmit():
         read_file =  open("./schema/Data.json", "r",encoding="utf-8")
         json_array = json.load(read_file)
         
-        n = len(json_array)+1
+        n = len(json_array)
         nstr = str(n)
         idstr = "n"+nstr
 
@@ -47,19 +47,14 @@ def rsubmit():
             "hr":hr,
             "sv":sv
         }
-
+              
         json_array.append(newData)
         
         input_file =  open("./schema/Data.json", "w",encoding="utf-8")
-        json.dump(json_array, input_file, ensure_ascii=False)
-
+        json.dump(json_array,input_file,ensure_ascii=False) 
+   
         return render_template("main.html", data = json_array)
-
-
-@app.route("/main.html/manage/", methods=['POST'])
-def manage():
-    return render_template("index.html", data = json_array)
-
+ 
 
 if __name__ == "__main__":
     app.run()
