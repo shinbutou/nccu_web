@@ -62,7 +62,8 @@
 			}
             
             var temp_R  = new L.marker([0,0]);
-			var temp_M  = new L.marker([0,0]);
+			/*var temp_M  = new L.marker([0,0]);*/
+            //disabling adding marker to manage_map
 
             function onMapClick_R(e){
                 temp_R.setLatLng(e.latlng).addTo(report_map).bindPopup("<b>Incident Location</b>").openPopup();
@@ -70,9 +71,10 @@
                 document.getElementById("lon").value = e.latlng.lng;
             
             }
-			function onMapClick_M(e){
+			/*(function onMapClick_M(e){
                 temp_M.setLatLng(e.latlng).addTo(manage_map).bindPopup("<b>Incident Location</b>").openPopup();  
-            }
+            }*/
+            //disabling adding marker to manage_map
 			
 			function getUserPosition(n) {
 				// 檢查瀏覽器是否支援 Geolocation API
@@ -219,14 +221,14 @@
               
             document.getElementById("change_to_w").onclick = function(){
                 if( nowChart == 2){
-                    document.getElementById("chartName").innerHTML="本月全部案件數";
+                    document.getElementById("chartName").innerHTML="累計回報案件數量";
                     nowChart = 1;
                     _transition();
                 }
             }
             document.getElementById("change_to_v").onclick = function(){
                 if( nowChart ==1 ){
-                    document.getElementById("chartName").innerHTML="本月已解決案件數";
+                    document.getElementById("chartName").innerHTML="累計解決案件數量";
                     nowChart = 2;
                     _transition();
                 }
@@ -493,7 +495,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="text" class="rcinput" id="lat" name="lat">
+                                            <input type="number" step=any class="rcinput" id="lat" name="lat">
                                         </td>
                                         <td>
                                             <select class="rcinput" id="dis" name="dis" value="">
@@ -517,7 +519,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="text" class="rcinput" id="lon" name="lon">
+                                            <input type="number" step=any class="rcinput" id="lon" name="lon">
                                         </td>
                                     </tr>
                                 </table>
@@ -592,16 +594,13 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <p class="heading">Number of Cases</p>
-                                    </td>
-                                    <td>
-                                        <p class="heading" id ="chartName">本月全部案件數</p>
+                                        <p class="heading" id ="chartName">累積回報案件數量</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="button" value="本月全部案件數" id="change_to_w">
-                                        <input type="button" value="本月已解決案件數" id="change_to_v">
+                                        <input type="button" value="回報數" id="change_to_w">
+                                        <input type="button" value="解決數" id="change_to_v">
                                     </td>
                                 </tr>
                             </table><br>
