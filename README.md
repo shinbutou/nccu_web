@@ -8,4 +8,6 @@ The student IDs of the two responsible for the final project are listed below:
 * 106308049
 * 107702009
 
-The campus of National Chengchi University is located at the foot of the mountain hills, with abundance of wild or stray animal presence. In case of danger or incidents where human intervention was needed, students are prone to share information on social media. But due to the general lack of management and the use of applications that weren't designed for this specific purpose, the spread of information can often be quite inefficient. To tackle this situation, we set out to build an animal reporting system. The project utilized the Python web framework, Flask. 
+The campus of National Chengchi University is located at the foot of the mountain hills, with abundance of wild or stray animal presence. In case of danger or incidents where human intervention was needed, students are prone to share information on social media. However, due to the general lack of management and the use of applications that weren't designed for this specific purpose, the spread of information can often be quite inefficient. To tackle this situation, we set out to build an animal reporting system.
+
+The project utilized the Python web framework, Flask. My main contribution also centers around it, as my first project done in Flask. The integration of the Javascript libraries were mostly done by my partner.
